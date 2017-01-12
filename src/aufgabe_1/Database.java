@@ -2,6 +2,7 @@ package aufgabe_1;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,11 +20,14 @@ import java.util.Calendar;
 public class Database {
 	
 	private static String user = "Mo14a_1", pass = "dDGpq8DXGe4Q",host = "slo.swe.fh-luebeck.de",db=user;
-	private static String table = "customer";
-	private static String head = "(store_id,first_name,last_name,email,address_id,active,create_date,last_update)";
-	private static String insert = "insert into "+table+" "+head+" values ";
+	private static String tablecustomer = "customer";
+	private static String tableaddress = "address";
+	private static String headaddress = "(address,address2,district,city_id,postal_code,phone,last_update)";
+	private static String headcustomer = "(store_id,first_name,last_name,email,address_id,active,create_date,last_update)";
+	private static String insertcustomer = "insert into "+tablecustomer+" "+headcustomer+" values ";
 	//private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-mm-dd hh:mm:ss");
 	private static String date = LocalDate.now().toString();
+	private static String insertaddress = "insert into "+tableaddress+" "+headaddress+" values ";
 
 	public static void main(String[] args) {
 		try {
@@ -33,22 +37,40 @@ public class Database {
 			Connection conn =
 			DriverManager.getConnection("jdbc:mysql://"+host+"/"+db+"?user="+user+"&password="+pass);
 			// Statement erzeugen and Query ausführen
-			String update = insert + "("+new Customer(
+			String updateaddress = insertaddress + "("+new Address(
+					"'Lindenstraße'",
+					"'Müllerallee'",
+					"'Lübeck'",
+					(short)2000,
+					"'23566'",
+					"'01764843232'",
+					null).getValues() +")";	
+
+			Statement stmt = conn.createStatement();
+			stmt.execute("SET FOREIGN_KEY_CHECKS=0");
+			stmt.close();
+			PreparedStatement address = conn.prepareStatement(updateaddress, Statement.RETURN_GENERATED_KEYS);
+			ResultSet rs = address.getGeneratedKeys();
+			int addressid = 0;
+
+			if (rs.next()) {
+				addressid = rs.getInt(1);
+			}
+			
+			String updatecustomer = insertcustomer + "("+new Customer(
 					(short)1, 
 					"'Max'", 
 					"'Mustermann'", 
 					"'mm@test.com'", 
-					(short)1000, 
+					(short)addressid, 
 					(short)1, 
 					//Date.valueOf(date),
 					null,
 					//Time.valueOf(date)).getValues()
 					null).getValues()
 					+")";
-			Statement stmt = conn.createStatement();
-			stmt.execute("SET FOREIGN_KEY_CHECKS=0");
-			stmt.close();
-			conn.createStatement().executeUpdate(update);
+			
+			conn.createStatement().executeUpdate(updatecustomer);
 //			Integer columns = res.getMetaData().getColumnCount();
 //			// ResultSet verarbelten
 //			while (res.next()) {

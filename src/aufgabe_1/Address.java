@@ -23,6 +23,17 @@ public class Address {
 		this.last_update = last_update;
 	}
 	
+	public String getValues(){
+		return
+				this.address + "," +
+				this.address2 + "," +
+				this.district + "," +
+				this.city_id + "," +
+				this.postal_code + "," +
+				this.phone + "," +
+				this.last_update;
+		}
+	
 	
 	
 }
