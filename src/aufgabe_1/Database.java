@@ -19,7 +19,6 @@ import java.util.Calendar;
 
 public class Database {
 	
-	private static String user = "Mo14a_1", pass = "dDGpq8DXGe4Q",host = "slo.swe.fh-luebeck.de",db=user;
 	private static String tablecustomer = "customer";
 	private static String tableaddress = "address";
 	private static String headaddress = "(address,address2,district,city_id,postal_code,phone,last_update)";
@@ -30,39 +29,43 @@ public class Database {
 	private static String insertaddress = "insert into "+tableaddress+" "+headaddress+" values ";
 
 	public static void main(String[] args) {
+		String 	host = args[0], 
+				db = args[1],
+				pwd = args[2],
+				user = db;
 		try {
 			// DBS‐JDBC‐Treiber laden
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			// DBS‐Verbindung herstellen
 			Connection conn =
-			DriverManager.getConnection("jdbc:mysql://"+host+"/"+db+"?user="+user+"&password="+pass);
+			DriverManager.getConnection("jdbc:mysql://"+host+"/"+db+"?user="+user+"&password="+pwd);
 			// Statement erzeugen and Query ausführen
-			String updateaddress = insertaddress + "("+new Address(
-					"'Lindenstraße'",
-					"'Müllerallee'",
-					"'Lübeck'",
-					(short)2000,
-					"'23566'",
-					"'01764843232'",
-					null).getValues() +")";	
-
+//			String updateaddress = insertaddress + "("+new Address(
+//					"'Lindenstraße'",
+//					"'Müllerallee'",
+//					"'Lübeck'",
+//					(short)2000,
+//					"'23566'",
+//					"'01764843232'",
+//					null).getValues() +")";	
+//
 			Statement stmt = conn.createStatement();
 			stmt.execute("SET FOREIGN_KEY_CHECKS=0");
 			stmt.close();
-			PreparedStatement address = conn.prepareStatement(updateaddress, Statement.RETURN_GENERATED_KEYS);
-			ResultSet rs = address.getGeneratedKeys();
-			int addressid = 0;
-
-			if (rs.next()) {
-				addressid = rs.getInt(1);
-			}
+//			PreparedStatement address = conn.prepareStatement(updateaddress, Statement.RETURN_GENERATED_KEYS);
+//			ResultSet rs = address.getGeneratedKeys();
+//			int addressid = 0;
+//
+//			if (rs.next()) {
+//				addressid = rs.getInt(1);
+//			}
 			
 			String updatecustomer = insertcustomer + "("+new Customer(
 					(short)1, 
 					"'Max'", 
 					"'Mustermann'", 
 					"'mm@test.com'", 
-					(short)addressid, 
+					(short)1000, 
 					(short)1, 
 					//Date.valueOf(date),
 					null,
