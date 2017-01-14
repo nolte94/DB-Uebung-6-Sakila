@@ -1,18 +1,13 @@
 package aufgabe_1;
 
-import java.sql.Time;
+import java.sql.Timestamp;
 
 public class Address {
-	private String address;
-	private String address2;
-	private String district;
+	private String address,address2,district,postal_code,phone,last_update;
 	private short city_id;
-	private String postal_code;
-	private String phone;
-	private Time last_update;
 	
 	public Address(String address, String address2, String district,
-			short city_id, String postal_code, String phone, Time last_update) {
+			short city_id, String postal_code, String phone, String last_update) {
 		
 		this.address = address;
 		this.address2 = address2;
