@@ -22,7 +22,7 @@ public class Database {
 	private static String tablecustomer = "customer";
 	private static String tableaddress = "address";
 	private static String headaddress = "(address,address2,district,city_id,postal_code,phone,last_update)";
-	private static String headcustomer = "(store_id,first_name,last_name,email,address_id,active,create_date,last_update)";
+	private static String headcustomer = "(store_id,first_name,last_name,email,address_id,active,last_update)";
 	private static String insertcustomer = "insert into "+tablecustomer+" "+headcustomer+" values ";
 	//private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-mm-dd hh:mm:ss");
 	private static String date = LocalDate.now().toString();
