@@ -40,32 +40,25 @@ public class Database {
 			Connection conn =
 			DriverManager.getConnection("jdbc:mysql://"+host+"/"+db+"?user="+user+"&password="+pwd);
 			// Statement erzeugen and Query ausführen
-//			String updateaddress = insertaddress + "("+new Address(
-//					"'Lindenstraße'",
-//					"'Müllerallee'",
-//					"'Lübeck'",
-//					(short)2000,
-//					"'23566'",
-//					"'01764843232'",
-//					null).getValues() +")";	
-//
-			Statement stmt = conn.createStatement();
-			stmt.execute("SET FOREIGN_KEY_CHECKS=0");
-			stmt.close();
-//			PreparedStatement address = conn.prepareStatement(updateaddress, Statement.RETURN_GENERATED_KEYS);
-//			ResultSet rs = address.getGeneratedKeys();
-//			int addressid = 0;
-//
-//			if (rs.next()) {
-//				addressid = rs.getInt(1);
-//			}
+			String updateaddress = insertaddress + "("+new Address(
+					"'Lindenstraße'",
+					"'Müllerallee'",
+					"'Lübeck'",
+					(short)1,
+					"'23566'",
+					"'01764843232'",
+					null).getValues() +")";	
+
+			Statement stmtAddress = conn.createStatement();
+			stmtAddress.executeUpdate(updateaddress,Statement.RETURN_GENERATED_KEYS);
+			ResultSet resAddress = stmtAddress.getGeneratedKeys();
 			
 			String updatecustomer = insertcustomer + "("+new Customer(
 					(short)1, 
 					"'Max'", 
 					"'Mustermann'", 
 					"'mm@test.com'", 
-					(short)1000, 
+					(short)(resAddress.next() ? resAddress.getInt(1):-1), 
 					(short)1, 
 					//Date.valueOf(date),
 					null,
@@ -74,13 +67,6 @@ public class Database {
 					+")";
 			
 			conn.createStatement().executeUpdate(updatecustomer);
-//			Integer columns = res.getMetaData().getColumnCount();
-//			// ResultSet verarbelten
-//			while (res.next()) {
-//			for (int i = 1; i <= columns; i++) {
-//			Object o = res.getObject(i);
-//			System.out.println(o);
-//			}
 			Statement stmt1 = conn.createStatement();
 			stmt1.execute("SET FOREIGN_KEY_CHECKS=1");
 			stmt1.close();
