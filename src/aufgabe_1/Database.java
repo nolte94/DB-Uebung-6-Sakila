@@ -60,8 +60,6 @@ public class Database {
 					"'mm@test.com'", 
 					(short)(resAddress.next() ? resAddress.getInt(1):-1), 
 					(short)1, 
-					//Date.valueOf(date),
-					null,
 					//Time.valueOf(date)).getValues()
 					null).getValues()
 					+")";
