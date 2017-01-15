@@ -2,7 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="/home/fhldomi/FHL/Semester/01-Semester/Praktikum/Datenbanken/Uebungen/Uebung-6/java/DB-Uebung-6-Sakila/lib/mysql-connector-java-6.0.5.jar"/>
-	<classpathentry kind="lib" path="/home/fhldomi/FHL/Semester/01-Semester/Praktikum/Datenbanken/Uebungen/Uebung-6/java/DB-Uebung-6-Sakila/lib/ormlite-jdbc-5.0.jar"/>
+	<classpathentry kind="lib" path="/home/fhldomi/FHL/Semester/01-Semester/Praktikum/Datenbanken/Uebungen/Uebung-6/java/DB-Uebung-6-Sakila/libs/ormlite-jdbc-5.0.jar"/>
+	<classpathentry kind="lib" path="/home/fhldomi/FHL/Semester/01-Semester/Praktikum/Datenbanken/Uebungen/Uebung-6/java/DB-Uebung-6-Sakila/libs/mysql-connector-java-6.0.5.jar"/>
+	<classpathentry kind="lib" path="/home/fhldomi/FHL/Semester/01-Semester/Praktikum/Datenbanken/Uebungen/Uebung-6/java/DB-Uebung-6-Sakila/libs/ormlite-core-5.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
