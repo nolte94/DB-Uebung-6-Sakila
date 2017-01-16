@@ -22,7 +22,7 @@ public class Customer {
 	private Timestamp create_date;
 	@DatabaseField
 	private int active;
-	@DatabaseField(canBeNull = false,foreign=true)
+	@DatabaseField(canBeNull = false,foreign=true,foreignAutoCreate = true)
 	private Address address;
 	
 	public Customer() {

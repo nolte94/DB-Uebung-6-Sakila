@@ -3,10 +3,12 @@ package aufgabe_1;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Scanner;
+import java.util.concurrent.Callable;
 import java.util.function.Consumer;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.misc.TransactionManager;
 import com.j256.ormlite.support.ConnectionSource;
 
 /**
@@ -39,24 +41,25 @@ public class Task_1 implements Consumer<ConnectionSource> {
 	@Override
 	public void accept(ConnectionSource connectionSource) {
 		try {
+
 			//Ein DAO (data access object) fuer die Kunden Tabelle erstellen
 			Dao<Customer,Integer> customerDao = DaoManager.createDao(connectionSource, Customer.class);
-			
-			//Ein Dao fuer eine Adresse erstellen
-			Dao<Address, Integer> addressDao = DaoManager.createDao(connectionSource, Address.class);
-			
+						
 			//Eine Adresse erstellen
 			Address address = new Address(this.address,this.address2,this.district,this.city_id,this.postal_code,this.phone,timeStamp);
-			
-			//Eine Adresse in Datenbank erstellen
-			addressDao.create(address);
-			
+						
 			//Einen Kunden erstellen
 			Customer customer = new Customer(this.store_id,this.first_name,this.last_name,this.email,this.active,timeStamp,timeStamp,null);
 			customer.setAddress(address);
 			
-			//Einen Kunden in Datenbank speichern
-			customerDao.create(customer);
+			TransactionManager.callInTransaction(connectionSource, new Callable<Void>() {
+				@Override
+				public Void call() throws Exception {
+					//Einen Kunden in Datenbank speichern
+					customerDao.create(customer);
+					return null;
+				}
+			});
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
